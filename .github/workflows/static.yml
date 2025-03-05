@@ -1,0 +1,138 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple and SEO-friendly blogging website about occupational therapy, rehabilitation, autism, and healthcare insights">
+    <meta name="keywords" content="occupational therapy, rehabilitation, healthcare, autism, therapy techniques, patient care, wellness, physical therapy">
+    <meta name="author" content="Your Name">
+    <meta property="og:title" content="Occupational Therapy Blog - Rehab, Autism & Wellness Insights">
+    <meta property="og:description" content="Stay updated with the latest trends in occupational therapy, patient rehabilitation, autism support, and healthcare advancements.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:image" content="https://yourwebsite.com/preview.jpg">
+    <title>Occupational Therapy Blog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+        header { background: #333; color: white; padding: 1rem; text-align: center; }
+        nav { text-align: center; background: #444; padding: 0.5rem; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; }
+        .container { width: 80%; margin: auto; padding: 20px; background: white; }
+        .blog-post { border-bottom: 1px solid #ddd; padding: 20px 0; }
+        .blog-post h2 { color: #333; }
+        .read-more { color: blue; text-decoration: none; }
+        .search-bar { text-align: center; margin: 20px; }
+        .search-bar input { padding: 10px; width: 80%; }
+        .social-share { text-align: center; margin: 20px; }
+        .social-share a { margin: 0 10px; text-decoration: none; font-size: 20px; }
+        .comment-section { width: 80%; margin: 20px auto; background: #fff; padding: 20px; border-radius: 5px; }
+        .comment-section h3 { margin-bottom: 10px; }
+        .comment-list { list-style: none; padding: 0; }
+        .comment-list li { padding: 10px; border-bottom: 1px solid #ddd; }
+        .comment-form input, .comment-form textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .comment-form button { padding: 10px 15px; background: #333; color: white; border: none; cursor: pointer; }
+        footer { text-align: center; padding: 10px; background: #333; color: white; margin-top: 20px; }
+        .seo-keywords { display: none; }
+    </style>
+    <script>
+        function searchBlog() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let posts = document.getElementsByClassName('blog-post');
+            
+            for (let post of posts) {
+                let title = post.getElementsByTagName('h2')[0].innerText.toLowerCase();
+                post.style.display = title.includes(input) ? '' : 'none';
+            }
+        }
+        
+        function addComment() {
+            let name = document.getElementById('comment-name').value;
+            let comment = document.getElementById('comment-text').value;
+            if (name && comment) {
+                let commentList = document.getElementById('comments');
+                let newComment = document.createElement('li');
+                newComment.innerHTML = `<strong>${name}:</strong> ${comment}`;
+                commentList.appendChild(newComment);
+                document.getElementById('comment-name').value = '';
+                document.getElementById('comment-text').value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Occupational Therapy Blog</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search blog..." onkeyup="searchBlog()">
+    </div>
+    <div class="container">
+        <div class="blog-post">
+            <h2>Understanding Occupational Therapy</h2>
+            <p>An introduction to the fundamentals of occupational therapy and its impact on patient recovery...</p>
+            <a href="blog1.html" class="read-more">Read More</a>
+        </div>
+        <div class="blog-post">
+            <h2>Top Rehabilitation Techniques</h2>
+            <p>Explore the most effective rehabilitation techniques used in occupational therapy...</p>
+            <a href="blog2.html" class="read-more">Read More</a>
+        </div>
+        <div class="blog-post">
+            <h2>Enhancing Patient Mobility</h2>
+            <p>Discover ways to improve patient mobility and independence through therapy...</p>
+            <a href="blog3.html" class="read-more">Read More</a>
+        </div>
+    </div>
+    <div class="social-share">
+        <p>Share this blog:</p>
+        <a href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+window.location.href, '_blank')">📘 Facebook</a>
+        <a href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+window.location.href, '_blank')">🐦 Twitter</a>
+        <a href="#" onclick="window.open('https://www.linkedin.com/shareArticle?url='+window.location.href, '_blank')">🔗 LinkedIn</a>
+    </div>
+    <div class="comment-section">
+        <h3>Leave a Comment</h3>
+        <ul id="comments" class="comment-list"></ul>
+        <div class="comment-form">
+            <input type="text" id="comment-name" placeholder="Your Name">
+            <textarea id="comment-text" placeholder="Your Comment"></textarea>
+            <button onclick="addComment()">Submit</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Occupational Therapy Blog. All rights reserved.</p>
+    </footer>
+    <div class="seo-keywords">
+        <p>Occupational Therapy, Rehabilitation, Healthcare, Autism, Therapy Techniques, Patient Care, Wellness, Physical Therapy</p>
+    </div>
+</body>
+</html>ployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
